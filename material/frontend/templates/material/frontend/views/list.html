@@ -69,6 +69,24 @@
             </div>
         </div>
     </div>
+    <div class="col s12 m12 l3">
+        {% if view.list_actions %}
+        <div class="card">
+            <div class="card-content">
+                <div class="card-title">{% trans 'Actions' %}</div>
+                <select>
+                    <option disabled selected>Choose your option</option>
+                    {% for title, url in view.list_actions %}
+                    <option value="{{ url }}">{{ title }}</option>
+                    {% endfor %}
+                </select>
+                <div class="card-actions right-align">
+                    <button class="btn" type="submit">Go</button>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
 
     {% block action_btn %}
     <div class="fixed-action-btn">

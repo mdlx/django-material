@@ -1,3 +1,5 @@
+from django.views import generic
+
 from material import Layout, Row, Fieldset
 from material.frontend.views import ModelViewSet
 from . import models
@@ -6,6 +8,9 @@ from . import models
 class CityViewSet(ModelViewSet):
     model = models.City
     list_display = ('name', 'country', 'population')
+    list_actions = [
+        ('Delete selected objects', generic.DeleteView)
+    ]
 
 
 class ContinentViewSet(ModelViewSet):
@@ -36,7 +41,7 @@ class CountryViewSet(ModelViewSet):
     list_display = (
         'tld', 'name', 'continent',
         'became_independent_in_20_century',
-        'gay_friendly')
+        'gay_friendly',)
     list_display_links = ('tld', 'name', )
 
     def tld(self, country):

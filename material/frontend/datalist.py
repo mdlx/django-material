@@ -71,7 +71,6 @@ class ModelAttr(object):
             return self._label
         return _get_attr_label(self.model, self.name)
 
-
     @property
     def orderable(self):  # noqa D102
         return False

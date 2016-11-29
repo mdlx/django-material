@@ -1,5 +1,13 @@
+from collections import namedtuple
+
 from django.conf.urls import url
 from django.contrib.auth import get_permission_codename
+
+try:
+    from django.urls import reverse_lazy
+except ImportError:
+    from django.core.urlresolvers import reverse_lazy
+
 
 from .create import CreateModelView
 from .delete import DeleteModelView
@@ -9,6 +17,9 @@ from .update import UpdateModelView
 
 
 DEFAULT = object()
+
+
+Action = namedtuple('Action', ['title', 'view', 'url_regexp', 'url_name'])
 
 
 class BaseViewset(object):
@@ -93,6 +104,8 @@ class ModelViewSet(BaseViewset):
 
     model = None
     queryset = DEFAULT
+
+    list_actions = None
     list_display = DEFAULT
     list_display_links = DEFAULT
 
@@ -217,10 +230,16 @@ class ModelViewSet(BaseViewset):
 
         May not be called if `get_list_view` is overriden.
         """
+        opts = self.model._meta
         result = {
             'list_display': self.list_display,
-            'list_display_links': self.list_display_links
+            'list_display_links': self.list_display_links,
+            'list_actions': [
+                (action.title, reverse_lazy('{}:{}'.format(opts.app_label, action.url_name)))
+                for action in self._get_actions()
+            ]
         }
+
         result.update(kwargs)
         return self.filter_kwargs(self.list_view_class, **result)
 
@@ -307,3 +326,43 @@ class ModelViewSet(BaseViewset):
             self.get_delete_view(),
             '{model_name}_delete'
         ]
+
+    def _get_actions(self):
+        result = []
+        if self.list_actions is not None:
+            name_template = '{model_name}_list_{action_name}'
+            for action_title, action_view in self.list_actions:
+                url_regexp = '^action/{action_name}/$'
+
+                action_name = action_view.__name__.lower()
+                if action_name.endswith('view'):
+                    action_name = action_name[:-4]
+
+                format_kwargs = {
+                    'model_name': self.model._meta.model_name,
+                    'action_name': action_name
+                }
+                result.append(Action(
+                    action_title,
+                    action_view,
+                    url_regexp.format(**format_kwargs),
+                    name_template.format(**format_kwargs)
+                ))
+        return result
+
+    @property
+    def urls(self):
+        """Collect url specs from the instance attributes.
+
+        Assumes that each attribute with name ending with `_view`
+        contains tripple (regexp, view, url_name)
+
+        In addition registers action views on own urls.
+        """
+        result = super(ModelViewSet, self).urls
+        for action in self._get_actions():
+            result.append(
+                url(action.url_regexp, action.view, name=action.url_name)
+            )
+
+        return result

@@ -38,6 +38,10 @@ class ListModelView(ContextMixin, TemplateResponseMixin, View):
     :keyword list_display_links: List of fields form `list_display`
                                  linked to change view
 
+    :keyword list_actions: Tuple of ('Action Name', '/action/url/')
+                           that get called with a list of objects selected
+                           on the change list page.
+
     """
 
     model = None
@@ -51,6 +55,7 @@ class ListModelView(ContextMixin, TemplateResponseMixin, View):
     datalist_class = DataList
     list_display = ('__str__', )
     list_display_links = ()
+    list_actions = None
 
     datatable_default_config = {
         'processing': False,
