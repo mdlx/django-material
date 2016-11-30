@@ -200,4 +200,5 @@ class DataList(object):
             for n, field_name in enumerate(self.list_display):
                 attr = self.get_data_attr(field_name)
                 columns[field_name] = smart_text(attr.get_value(item))
+            columns['_pk'] = item.pk
             yield item, columns

@@ -24,6 +24,21 @@
       },
     }
   ];
+  {% if view.list_actions %}
+  config['columns'].unshift({'data': '_pk'})
+  config['columnDefs'].push({
+    'targets': 0,
+    'searchable': false,
+    'orderable': false,
+    'render': function (data, type, full, meta) {
+      var checkbox_id = '_selected_action_' + data
+      return '<p>' +
+        '<input class="filled-in" type="checkbox" name="pk"' + ' id="'+ checkbox_id +'"' +' value="' + data + '">' +
+        '<label for="' + checkbox_id + '">&nbsp;</label>' +
+        '</p>';
+    }
+  })
+  {% endif %}
   $(document).one("turbolinks:load", function() {
     if ( ! $.fn.DataTable.isDataTable( '#table' ) ) {
       var datatable = $('#table').DataTable(config);
@@ -31,6 +46,7 @@
 
       $(document).one("turbolinks:before-cache", function() {
         datatable.destroy();
+        $('input:checkbox').removeAttr('checked');
       });
     }
   });
@@ -45,15 +61,30 @@
                 <table id="table" class="table bordered" data-form-control="datatable" style="width:100%">
                     <thead>
                         <tr>
+                            {% if view.list_actions %}
+                            <th style="width:20px;padding-right:0">
+                                <input type="checkbox" class="filled-in" id="action-toggle">
+                                <label for="action-toggle">&nbsp;</label>
+                            </th>
+                            {% endif %}
                             {% for header, header_title in headers %}
-                            <th data-name="{{ header }}" class="{{ header }}">{{ header_title|title }}</th>
+                            <th data-name="{{ header }}" class="{{ header }} sorting_disabled">{{ header_title|title }}</th>
                             {% endfor %}
                         </tr>
                     </thead>
                     <tbody>
                         {% for item, row in data %}
                         <tr>
+                            {% if view.list_actions %}
+                            <td>
+                                <p>
+                                    <input class="filled-in" type="checkbox" name="pk" id="_selected_action_{{ forloop.counter }}" value="">
+                                    <label for="_selected_action_{{ forloop.counter }}">&nbsp;</label>
+                                </p>
+                            </td>
+                            {% endif %}
                             {% for column_name, item in row.items %}
+                            {% if column_name.0 != '_' %}
                             <td>
                                 {% if column_name in view.datalist.list_display_links %}
                                     <a href="#">{{ item }}</a>
@@ -61,11 +92,12 @@
                                     {{ item }}
                                 {% endif %}
                             </td>
+                            {% endif %}
                             {% endfor %}
                         </tr>
                         {% endfor %}
                     </tbody>
-                </table>
+                </table>                
             </div>
         </div>
     </div>

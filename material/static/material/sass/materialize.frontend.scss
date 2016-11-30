@@ -150,7 +150,11 @@ nav.breadcrumbs {
 
 /* DATATABLE */
 table[data-form-control="datatable"] {
+    margin-bottom: 60px;
+
     ~.dataTables_paginate {
+        margin-top: -60px;
+        min-height: 60px;
         text-align: right;
 
         .paginate_button {
@@ -178,12 +182,13 @@ table[data-form-control="datatable"] {
 
     thead {
         tr>th {
+            padding-right: 30px;
+          
             &.sorting,
             &.sorting_asc,
             &.sorting_desc {
                 cursor: pointer;
                 position: relative;
-                padding-right: 30px;
             }
 
             &.sorting:before,
@@ -238,7 +243,9 @@ table[data-form-control="datatable"] {
     }
 }
 
-
+.fixedHeader-floating {
+    z-index: 1; /* Fix for checkbox column */
+}
 
 
 

@@ -98,54 +98,57 @@ nav.breadcrumbs {
       text-overflow: ellipsis; } }
 
 /* DATATABLE */
-table[data-form-control="datatable"] ~ .dataTables_paginate {
-  text-align: right; }
-  table[data-form-control="datatable"] ~ .dataTables_paginate .paginate_button {
-    display: inline-block;
-    font-size: 1.2rem;
-    padding: 0 10px;
-    margin: 15px 2px;
-    line-height: 30px;
-    border-radius: 2px;
-    text-align: center;
-    color: #444;
-    cursor: pointer; }
-    table[data-form-control="datatable"] ~ .dataTables_paginate .paginate_button.current {
-      background-color: #4caf50;
-      color: white; }
-    table[data-form-control="datatable"] ~ .dataTables_paginate .paginate_button.disabled {
-      cursor: default;
-      color: #999; }
+table[data-form-control="datatable"] {
+  margin-bottom: 60px; }
+  table[data-form-control="datatable"] ~ .dataTables_paginate {
+    margin-top: -60px;
+    min-height: 60px;
+    text-align: right; }
+    table[data-form-control="datatable"] ~ .dataTables_paginate .paginate_button {
+      display: inline-block;
+      font-size: 1.2rem;
+      padding: 0 10px;
+      margin: 15px 2px;
+      line-height: 30px;
+      border-radius: 2px;
+      text-align: center;
+      color: #444;
+      cursor: pointer; }
+      table[data-form-control="datatable"] ~ .dataTables_paginate .paginate_button.current {
+        background-color: #4caf50;
+        color: white; }
+      table[data-form-control="datatable"] ~ .dataTables_paginate .paginate_button.disabled {
+        cursor: default;
+        color: #999; }
+  table[data-form-control="datatable"] thead tr > th {
+    padding-right: 30px; }
+    table[data-form-control="datatable"] thead tr > th.sorting, table[data-form-control="datatable"] thead tr > th.sorting_asc, table[data-form-control="datatable"] thead tr > th.sorting_desc {
+      cursor: pointer;
+      position: relative; }
+    table[data-form-control="datatable"] thead tr > th.sorting:before, table[data-form-control="datatable"] thead tr > th.sorting:after, table[data-form-control="datatable"] thead tr > th.sorting_asc:before, table[data-form-control="datatable"] thead tr > th.sorting_asc:after, table[data-form-control="datatable"] thead tr > th.sorting_desc:before, table[data-form-control="datatable"] thead tr > th.sorting_desc:after, table[data-form-control="datatable"] thead tr > th.sorting_asc_disabled:before, table[data-form-control="datatable"] thead tr > th.sorting_asc_disabled:after, table[data-form-control="datatable"] thead tr > th.sorting_desc_disabled:before, table[data-form-control="datatable"] thead tr > th.sorting_desc_disabled:after {
+      position: absolute;
+      bottom: 11px;
+      display: block;
+      opacity: 0.3;
+      font-size: 1.3em;
+      margin: auto;
+      height: 30px;
+      top: 0px;
+      bottom: 0px; }
+    table[data-form-control="datatable"] thead tr > th.sorting:before, table[data-form-control="datatable"] thead tr > th.sorting_asc:before, table[data-form-control="datatable"] thead tr > th.sorting_desc:before, table[data-form-control="datatable"] thead tr > th.sorting_asc_disabled:before, table[data-form-control="datatable"] thead tr > th.sorting_desc_disabled:before {
+      right: 1em;
+      content: "\2191"; }
+    table[data-form-control="datatable"] thead tr > th.sorting:after, table[data-form-control="datatable"] thead tr > th.sorting_asc:after, table[data-form-control="datatable"] thead tr > th.sorting_desc:after, table[data-form-control="datatable"] thead tr > th.sorting_asc_disabled:after, table[data-form-control="datatable"] thead tr > th.sorting_desc_disabled:after {
+      right: 0.5em;
+      content: "\2193"; }
+    table[data-form-control="datatable"] thead tr > th.sorting_asc:before, table[data-form-control="datatable"] thead tr > th.sorting_desc:after {
+      opacity: 1; }
+    table[data-form-control="datatable"] thead tr > th.sorting_asc_disabled:before, table[data-form-control="datatable"] thead tr > th.sorting_desc_disabled:after {
+      opacity: 0; }
 
-table[data-form-control="datatable"] thead tr > th.sorting, table[data-form-control="datatable"] thead tr > th.sorting_asc, table[data-form-control="datatable"] thead tr > th.sorting_desc {
-  cursor: pointer;
-  position: relative;
-  padding-right: 30px; }
-
-table[data-form-control="datatable"] thead tr > th.sorting:before, table[data-form-control="datatable"] thead tr > th.sorting:after, table[data-form-control="datatable"] thead tr > th.sorting_asc:before, table[data-form-control="datatable"] thead tr > th.sorting_asc:after, table[data-form-control="datatable"] thead tr > th.sorting_desc:before, table[data-form-control="datatable"] thead tr > th.sorting_desc:after, table[data-form-control="datatable"] thead tr > th.sorting_asc_disabled:before, table[data-form-control="datatable"] thead tr > th.sorting_asc_disabled:after, table[data-form-control="datatable"] thead tr > th.sorting_desc_disabled:before, table[data-form-control="datatable"] thead tr > th.sorting_desc_disabled:after {
-  position: absolute;
-  bottom: 11px;
-  display: block;
-  opacity: 0.3;
-  font-size: 1.3em;
-  margin: auto;
-  height: 30px;
-  top: 0px;
-  bottom: 0px; }
-
-table[data-form-control="datatable"] thead tr > th.sorting:before, table[data-form-control="datatable"] thead tr > th.sorting_asc:before, table[data-form-control="datatable"] thead tr > th.sorting_desc:before, table[data-form-control="datatable"] thead tr > th.sorting_asc_disabled:before, table[data-form-control="datatable"] thead tr > th.sorting_desc_disabled:before {
-  right: 1em;
-  content: "\2191"; }
-
-table[data-form-control="datatable"] thead tr > th.sorting:after, table[data-form-control="datatable"] thead tr > th.sorting_asc:after, table[data-form-control="datatable"] thead tr > th.sorting_desc:after, table[data-form-control="datatable"] thead tr > th.sorting_asc_disabled:after, table[data-form-control="datatable"] thead tr > th.sorting_desc_disabled:after {
-  right: 0.5em;
-  content: "\2193"; }
-
-table[data-form-control="datatable"] thead tr > th.sorting_asc:before, table[data-form-control="datatable"] thead tr > th.sorting_desc:after {
-  opacity: 1; }
-
-table[data-form-control="datatable"] thead tr > th.sorting_asc_disabled:before, table[data-form-control="datatable"] thead tr > th.sorting_desc_disabled:after {
-  opacity: 0; }
+.fixedHeader-floating {
+  z-index: 1;
+  /* Fix for checkbox column */ }
 
 /* ALERTS */
 .toast a {
