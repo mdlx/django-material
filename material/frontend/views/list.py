@@ -147,7 +147,8 @@ class ListModelView(ContextMixin, TemplateResponseMixin, View):
             self.object_list,
             data_sources=[self, self.viewset] if self.viewset else [self],
             list_display=list_display,
-            list_display_links=list_display_links
+            list_display_links=list_display_links,
+            actions=bool(self.list_actions),
         )
 
     def get_queryset(self):
@@ -175,13 +176,17 @@ class ListModelView(ContextMixin, TemplateResponseMixin, View):
     def get_ordering(self):
         """ Return the field or fields to use for ordering the queryset."""
         if self.request_form.is_valid():
+            # TODO Move order_by construction into datalist
             ordering = []
             requested_order = self.request_form.cleaned_data['ordering']
             for spec in requested_order:
                 column_num, column_dir = spec.get('column', 0), spec.get('dir', 'asc')
 
                 try:
-                    order = self.list_display[int(column_num)]
+                    if self.list_actions is not None:
+                        order = self.list_display[int(column_num)-1]
+                    else:
+                        order = self.list_display[int(column_num)]
                     if column_dir == 'asc':
                         order = '-' + order
                 except (IndexError, TypeError):

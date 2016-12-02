@@ -125,6 +125,8 @@ table[data-form-control="datatable"] {
     table[data-form-control="datatable"] thead tr > th.sorting, table[data-form-control="datatable"] thead tr > th.sorting_asc, table[data-form-control="datatable"] thead tr > th.sorting_desc {
       cursor: pointer;
       position: relative; }
+    table[data-form-control="datatable"] thead tr > th.sorting_asc, table[data-form-control="datatable"] thead tr > th.sorting_desc {
+      font-weight: 500; }
     table[data-form-control="datatable"] thead tr > th.sorting:before, table[data-form-control="datatable"] thead tr > th.sorting:after, table[data-form-control="datatable"] thead tr > th.sorting_asc:before, table[data-form-control="datatable"] thead tr > th.sorting_asc:after, table[data-form-control="datatable"] thead tr > th.sorting_desc:before, table[data-form-control="datatable"] thead tr > th.sorting_desc:after, table[data-form-control="datatable"] thead tr > th.sorting_asc_disabled:before, table[data-form-control="datatable"] thead tr > th.sorting_asc_disabled:after, table[data-form-control="datatable"] thead tr > th.sorting_desc_disabled:before, table[data-form-control="datatable"] thead tr > th.sorting_desc_disabled:after {
       position: absolute;
       bottom: 11px;
@@ -145,6 +147,11 @@ table[data-form-control="datatable"] {
       opacity: 1; }
     table[data-form-control="datatable"] thead tr > th.sorting_asc_disabled:before, table[data-form-control="datatable"] thead tr > th.sorting_desc_disabled:after {
       opacity: 0; }
+  table[data-form-control="datatable"] tbody tr.selected {
+    background: #f5f5f5; }
+  table[data-form-control="datatable"] .dt-body-center {
+    padding-top: 10px;
+    padding-bottom: 0px; }
 
 .fixedHeader-floating {
   z-index: 1;

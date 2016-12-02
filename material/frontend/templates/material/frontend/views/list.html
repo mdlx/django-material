@@ -24,21 +24,6 @@
       },
     }
   ];
-  {% if view.list_actions %}
-  config['columns'].unshift({'data': '_pk'})
-  config['columnDefs'].push({
-    'targets': 0,
-    'searchable': false,
-    'orderable': false,
-    'render': function (data, type, full, meta) {
-      var checkbox_id = '_selected_action_' + data
-      return '<p>' +
-        '<input class="filled-in" type="checkbox" name="pk"' + ' id="'+ checkbox_id +'"' +' value="' + data + '">' +
-        '<label for="' + checkbox_id + '">&nbsp;</label>' +
-        '</p>';
-    }
-  })
-  {% endif %}
   $(document).one("turbolinks:load", function() {
     if ( ! $.fn.DataTable.isDataTable( '#table' ) ) {
       var datatable = $('#table').DataTable(config);
@@ -76,11 +61,9 @@
                         {% for item, row in data %}
                         <tr>
                             {% if view.list_actions %}
-                            <td>
-                                <p>
-                                    <input class="filled-in" type="checkbox" name="pk" id="_selected_action_{{ forloop.counter }}" value="">
-                                    <label for="_selected_action_{{ forloop.counter }}">&nbsp;</label>
-                                </p>
+                            <td class="dt-body-center">
+                                <input class="filled-in" type="checkbox" name="pk" id="_selected_action_{{ forloop.counter }}" value="">
+                                <label for="_selected_action_{{ forloop.counter }}">&nbsp;</label>
                             </td>
                             {% endif %}
                             {% for column_name, item in row.items %}
@@ -97,7 +80,7 @@
                         </tr>
                         {% endfor %}
                     </tbody>
-                </table>                
+                </table>
             </div>
         </div>
     </div>

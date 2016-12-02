@@ -120,7 +120,8 @@ class DataSourceAttr(object):
 class DataList(object):
     """Queryset to datatables data adapter."""
 
-    def __init__(self, model, queryset, data_sources=None, list_display=None, list_display_links=None):
+    def __init__(self, model, queryset, data_sources=None, list_display=None,
+                 list_display_links=None, actions=False):
         """Instantiate a datalist.
 
         :keyword data_source: List of classes that used as source to
@@ -138,6 +139,8 @@ class DataList(object):
         else:
             # Use only the first item in list_display as link
             list_display_links = list(self.list_display)[:1]
+
+        self.actions = actions
 
     def get_data_attr(self, attr_name):
         """Data getter for an attribute.
@@ -182,10 +185,20 @@ class DataList(object):
 
     def get_columns_def(self):
         """Returns columns definition for the datables js config."""
-        return [
+        result = [
             {'data': field_name, 'orderable': self.get_data_attr(field_name).orderable}
             for field_name in self.list_display
         ]
+        if self.actions:
+            result.insert(0, {
+                'targets': 0,
+                'data': '_pk',
+                'orderable': False,
+                'checkboxes': {
+                    'selectRow': True
+                },
+            })
+        return result
 
     def get_headers_data(self):
         """Readable column titles."""

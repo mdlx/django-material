@@ -183,12 +183,17 @@ table[data-form-control="datatable"] {
     thead {
         tr>th {
             padding-right: 30px;
-          
+
             &.sorting,
             &.sorting_asc,
             &.sorting_desc {
                 cursor: pointer;
                 position: relative;
+            }
+
+            &.sorting_asc,
+            &.sorting_desc {
+                font-weight:500;
             }
 
             &.sorting:before,
@@ -240,6 +245,15 @@ table[data-form-control="datatable"] {
                 opacity: 0
             }
         }
+    }
+
+    tbody tr.selected {
+        background: #f5f5f5;
+    }
+
+    .dt-body-center {
+        padding-top: 10px;
+        padding-bottom: 0px;
     }
 }
 

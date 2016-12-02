@@ -30,6 +30,7 @@ gulp.task('3rdparty.js', () => {
   var deps = [
     'node_modules/datatables.net-fixedheader/js/dataTables.fixedHeader.js',
     'node_modules/datatables.net-responsive/js/dataTables.responsive.js',
+    'node_modules/datatables.net-select/js/dataTables.select.js',
     'node_modules/datatables/media/js/jquery.dataTables.js',
     'node_modules/jquery-datetimepicker/build/jquery.datetimepicker.full.js',
     // 'node_modules/materialize-css/dist/js/materialize.js',
