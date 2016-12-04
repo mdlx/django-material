@@ -183,7 +183,7 @@ class ListModelView(ContextMixin, TemplateResponseMixin, View):
                 column_num, column_dir = spec.get('column', 0), spec.get('dir', 'asc')
 
                 try:
-                    if self.list_actions is not None:
+                    if bool(self.list_actions):
                         order = self.list_display[int(column_num)-1]
                     else:
                         order = self.list_display[int(column_num)]

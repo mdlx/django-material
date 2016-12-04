@@ -32,6 +32,7 @@
       $(document).one("turbolinks:before-cache", function() {
         datatable.destroy();
         $('input:checkbox').removeAttr('checked');
+        $('tr').removeClass('selected');
       });
     }
   });
