@@ -158,9 +158,9 @@ Checkboxes.prototype = {
 
             if(ctx.aoColumns[i].checkboxes.selectAll){
                $(dt.column(i).header())
-                  .html('<input type="checkbox" class="filled-in"><label>&nbsp;</label>')
+                  .html('<input type="checkbox" class="filled-in" id="selectall"><label for="selectall">&nbsp;</label>')
                   .addClass('dt-checkboxes-select-all')
-                  .attr('data-col', i)
+                  .attr('data-col', i);
             }
          }
       }
@@ -222,13 +222,8 @@ Checkboxes.prototype = {
          });
 
          // Handle click on "Select all" control
-         $tableContainer.on('click', 'thead th.dt-checkboxes-select-all input[type="checkbox"]', function(e){
+         $table.find('thead').on('click', 'th.dt-checkboxes-select-all input[type="checkbox"]', function(e){
             self.onClickSelectAll(e, this);
-         });
-
-         // Handle click on heading containing "Select all" control
-         $tableContainer.on('click', 'thead th.dt-checkboxes-select-all', function(e) {
-            $('input[type="checkbox"]', this).trigger('click');
          });
       }
    },
@@ -456,7 +451,10 @@ Checkboxes.prototype = {
       } else {
          col = dt.column($th).index();
       }
-
+      if(!col) {
+          // hackfix for fixedheader
+          col = 0;
+      }
       var cells = dt.cells('tr', col, {
          page: (
             (ctx.aoColumns[col].checkboxes && ctx.aoColumns[col].checkboxes.selectAllPages)
@@ -552,7 +550,7 @@ Checkboxes.prototype = {
             var $tableContainer = dt.table().container();
             var $checkboxes = dt.$(cells.nodes()).find('.dt-checkboxes');
             var $checkboxesChecked = dt.$(cells.nodes()).find('.dt-checkboxes:checked');
-            var $checkboxesSelectAll = $('.dt-checkboxes-select-all[data-col="' + colIdx + '"] input[type="checkbox"]', $tableContainer);
+            var $checkboxesSelectAll = $('.dt-checkboxes-select-all[data-col="' + colIdx + '"] input[type="checkbox"]');
 
             // If none of the checkboxes are checked
             if ($checkboxesChecked.length === 0) {

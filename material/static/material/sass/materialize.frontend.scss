@@ -300,9 +300,9 @@ table[data-form-control="datatable"] {
 }
 
 .fixedHeader-floating {
-    z-index: 1; /* Fix for checkbox column */
+    /* Fix for checkbox column */ 
+    z-index: 1;  
 }
-
 
 
 /* ALERTS */

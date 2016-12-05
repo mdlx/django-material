@@ -21,6 +21,7 @@
     "gulp-postcss": "^6.1.1",
     "gulp-sass": "^2.3.2",
     "gulp-uglify": "^2.0.0",
+    "jquery-datatables-checkboxes": "github:kmmbvnr/jquery-datatables-checkboxes",
     "jquery-datetimepicker": "^2.5.4",
     "material-design-icons": "^2.2.3",
     "materialize-css": "^0.97.8",

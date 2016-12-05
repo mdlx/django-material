@@ -80,7 +80,7 @@ class ListModelView(ContextMixin, TemplateResponseMixin, View):
         },
         'responsive': {
             'details': False
-        }
+        },
     }
 
     def has_view_permission(self, request, obj=None):

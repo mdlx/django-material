@@ -24,6 +24,11 @@
       },
     }
   ];
+  {% if view.list_actions %}
+  config['select'] = {
+    style: 'multi'
+  };
+  {% endif %}
   $(document).one("turbolinks:load", function() {
     if ( ! $.fn.DataTable.isDataTable( '#table' ) ) {
       var datatable = $('#table').DataTable(config);
@@ -89,7 +94,7 @@
         {% if view.list_actions %}
         <div class="card">
             <div class="card-content">
-                <div class="card-title">{% trans 'Actions' %}</div>
+                <div class="card-title">{% trans 'Action' %}</div>
                 <select>
                     <option disabled selected>Choose your option</option>
                     {% for title, url in view.list_actions %}

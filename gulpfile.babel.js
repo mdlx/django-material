@@ -31,9 +31,9 @@ gulp.task('3rdparty.js', () => {
     'node_modules/datatables.net-fixedheader/js/dataTables.fixedHeader.js',
     'node_modules/datatables.net-responsive/js/dataTables.responsive.js',
     'node_modules/datatables.net-select/js/dataTables.select.js',
+    'node_modules/jquery-datatables-checkboxes/js/dataTables.checkboxes.js',
     'node_modules/datatables/media/js/jquery.dataTables.js',
     'node_modules/jquery-datetimepicker/build/jquery.datetimepicker.full.js',
-    // 'node_modules/materialize-css/dist/js/materialize.js',
     'node_modules/perfect-scrollbar/dist/js/perfect-scrollbar.jquery.js',
     'node_modules/turbolinks/dist/turbolinks.js'
   ]
@@ -137,6 +137,8 @@ gulp.task('frontend.min.js', ['materialize.js', '3rdparty.js'], (cb) => {
     'material/static/material/js/perfect-scrollbar.jquery.js',
     'material/static/material/js/dataTables.fixedHeader.js',
     'material/static/material/js/dataTables.responsive.js',
+    'material/static/material/js/dataTables.checkboxes.js',
+    'material/static/material/js/dataTables.select.js',
     'material/static/material/js/materialize.js',
     'material/static/material/js/materialize.forms.js',
     'material/static/material/js/materialize.frontend.js',
