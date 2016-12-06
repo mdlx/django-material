@@ -39,7 +39,18 @@
         $('input:checkbox').removeAttr('checked');
         $('tr').removeClass('selected');
       });
-    }
+
+      {% if view.list_actions %}
+      function updateSelectInfo() {
+        var selected = datatable.column(0).checkboxes.selected();
+        //alert(selected);
+      }
+
+      datatable
+        .on('deselect', updateSelectInfo)
+        .on('select', updateSelectInfo);
+      {% endif %}
+    };
   });
 </script>
 {% endblock %}
