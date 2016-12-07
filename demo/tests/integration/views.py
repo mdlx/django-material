@@ -1,7 +1,5 @@
-from django.views import generic
-
 from material import Layout, Row, Fieldset
-from material.frontend.views import ModelViewSet
+from material.frontend.views import ModelViewSet, DeleteActionView
 from . import models
 
 
@@ -9,7 +7,7 @@ class CityViewSet(ModelViewSet):
     model = models.City
     list_display = ('name', 'country', 'population')
     list_actions = [
-        ('Delete selected objects', generic.DeleteView)
+        ('Delete selected objects', DeleteActionView)
     ]
 
 

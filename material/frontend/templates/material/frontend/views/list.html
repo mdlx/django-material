@@ -38,17 +38,24 @@
         datatable.destroy();
         $('input:checkbox').removeAttr('checked');
         $('tr').removeClass('selected');
+        $('#actionCard').off()
       });
 
       {% if view.list_actions %}
-      function updateSelectInfo() {
-        var selected = datatable.column(0).checkboxes.selected();
-        //alert(selected);
-      }
+      $('#actionCard').on('click.actionForm', 'button', function(e) {
+        e.preventDefault();
 
-      datatable
-        .on('deselect', updateSelectInfo)
-        .on('select', updateSelectInfo);
+        var actionUrl = $('#actionCard select[name="action_url"]').val()
+        var selected = datatable.column(0).checkboxes.selected();
+        if(actionUrl && selected.length) {
+          var actionForm = $("<form action='" + actionUrl + "' method='POST'>{% csrf_token %}</form>");
+          for(i=0; i<selected.length; i++) {
+            actionForm.append('<input type="hidden" name="pk" value="'+ selected[i] + '">');
+          }
+          $('body').append(actionForm);
+          actionForm.submit();
+        }
+      })
       {% endif %}
     };
   });
@@ -103,17 +110,17 @@
     </div>
     <div class="col s12 m12 l3">
         {% if view.list_actions %}
-        <div class="card">
+        <div class="card" id="actionCard">            
             <div class="card-content">
                 <div class="card-title">{% trans 'Action' %}</div>
-                <select>
+                <select name="action_url">
                     <option disabled selected>Choose your option</option>
                     {% for title, url in view.list_actions %}
                     <option value="{{ url }}">{{ title }}</option>
                     {% endfor %}
                 </select>
                 <div class="card-actions right-align">
-                    <button class="btn" type="submit">Go</button>
+                    <button class="btn" type="submit" name="action">Go</button>
                 </div>
             </div>
         </div>

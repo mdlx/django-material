@@ -19,7 +19,7 @@ from .update import UpdateModelView
 DEFAULT = object()
 
 
-Action = namedtuple('Action', ['title', 'view', 'url_regexp', 'url_name'])
+Action = namedtuple('Action', ['title', 'view_class', 'url_regexp', 'url_name'])
 
 
 class BaseViewset(object):
@@ -268,7 +268,7 @@ class ModelViewSet(BaseViewset):
         """
         result = {
             'layout': self.layout,
-            'form_Class': self.form_class,
+            'form_class': self.form_class,
         }
         result.update(kwargs)
         return self.filter_kwargs(self.update_view_class, **result)
@@ -337,6 +337,8 @@ class ModelViewSet(BaseViewset):
                 action_name = action_view.__name__.lower()
                 if action_name.endswith('view'):
                     action_name = action_name[:-4]
+                if action_name.endswith('action'):
+                    action_name = action_name[:-6]
 
                 format_kwargs = {
                     'model_name': self.model._meta.model_name,
@@ -350,6 +352,14 @@ class ModelViewSet(BaseViewset):
                 ))
         return result
 
+    def get_action_view_kwargs(self, action_view_class, **kwargs):
+        """Configuration arguments for action view."""
+        return self.filter_kwargs(action_view_class)
+
+    def get_action_view(self, action_view_class):
+        """Construct a function action view form view class."""
+        return action_view_class.as_view(**self.get_action_view_kwargs(action_view_class))
+
     @property
     def urls(self):
         """Collect url specs from the instance attributes.
@@ -359,10 +369,11 @@ class ModelViewSet(BaseViewset):
 
         In addition registers action views on own urls.
         """
-        result = super(ModelViewSet, self).urls
+        result = []
         for action in self._get_actions():
+            action_view = self.get_action_view(action.view_class)
             result.append(
-                url(action.url_regexp, action.view, name=action.url_name)
+                url(action.url_regexp, action_view, name=action.url_name)
             )
-
+        result += super(ModelViewSet, self).urls
         return result
